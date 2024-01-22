@@ -1,0 +1,58 @@
+.tm-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1em 1em 0em 0;
+}
+
+.tm-header > span > button {
+  background-color: transparent;
+  border: none;
+  margin-right: 2em;
+  cursor: pointer;
+}
+
+.songsbanner {
+  display: flex;
+  overflow: hidden;
+}
+
+.songsbanner figure {
+  margin-left: 0;
+  margin-right: 2%;
+  cursor: pointer;
+  transition: transform 0.3s ease;
+}
+
+.songsbanner figure:hover {
+  transform: scale(102%);
+}
+
+.songsbanner img {
+  border-radius: 10px;
+  width: 260px;
+  height: 260px;
+  object-fit: cover;
+  object-position: center;
+}
+
+.songsbanner figcaption {
+  text-align: left;
+}
+
+.songsbanner h2 {
+  margin: 0;
+  white-space: nowrap; /* Prevent text from wrapping to the next line */
+  overflow: hidden; /* Hide any overflowing content */
+  text-overflow: ellipsis;
+}
+
+.songsbanner p {
+  width: 260px;
+  color: gray;
+  margin: 0;
+  padding: 0;
+  white-space: nowrap; /* Prevent text from wrapping to the next line */
+  overflow: hidden; /* Hide any overflowing content */
+  text-overflow: ellipsis;
+}

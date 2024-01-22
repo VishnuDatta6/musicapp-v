@@ -1,0 +1,43 @@
+.sidebar {
+  background-color: white;
+  margin: 3% 2% 2% 2%;
+  border-radius: 10px;
+  padding-top: 1.5%;
+  position: relative;
+  height: 80vh;
+}
+
+.sidebar > figure > img {
+  position: absolute;
+  width: 5rem;
+  transform: translate(-50%, -50%);
+  left: 50%;
+  top: 0;
+  border-radius: 50%;
+}
+
+figcaption {
+  text-align: center;
+  padding-bottom: 2em;
+}
+
+figcaption > p {
+  margin: 0;
+  color: #5e77fb;
+}
+
+.browse li,
+.discover li {
+  display: flex;
+  align-items: center;
+  list-style-type: none;
+  margin-left: -5%;
+  padding: 1em 0;
+  opacity: 0.5;
+  font-weight: bold;
+}
+
+.browse > h2,
+.discover > h2 {
+  padding-left: 10%;
+}

@@ -1,0 +1,57 @@
+#popular{
+    width: 40%;
+}
+
+.songs-list {
+    height: 20vh;
+    overflow-y: scroll;
+    scrollbar-width: thin;
+    scrollbar-color: transparent transparent;
+    -ms-overflow-style: none;
+    padding-right: 5rem;
+}
+
+.songs-list::-webkit-scrollbar {
+    width: 6px;
+}
+
+.songs-list::-webkit-scrollbar-thumb {
+    background-color: transparent;
+}
+
+.song {
+    display: flex;
+    justify-content: space-between;
+    margin: 20px 0;
+}
+
+.song-details {
+    display: grid;
+    grid-auto-flow: column;
+    column-gap: 1rem;
+    align-items: center;
+}
+
+.song-details b, .song-details p{
+    margin: 0;
+    padding: 0;
+}
+
+.song-details>img{
+    width: 40px;
+    border-radius: 50%;
+    object-fit: fill;
+    object-position: center;
+}
+
+.song-duration{
+   display: grid;
+   grid-auto-flow: column;
+   align-items:center;
+   column-gap: 2em;
+}
+
+.playpause {
+    background-color: transparent;
+    border: none;
+}

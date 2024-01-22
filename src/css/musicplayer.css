@@ -1,0 +1,75 @@
+#musicplayer {
+  position: fixed;
+  bottom: 0;
+  width: 100vw;
+  display: grid;
+  grid-auto-flow: column;
+  column-gap: 2em;
+  background-color: white;
+  align-items: center;
+  padding: 0.5em 4em;
+}
+
+#musicplayer img {
+  width: 40px;
+  border-radius: 50%;
+  object-fit: cover;
+  margin-right:20px;
+}
+
+audio {
+  width: 1vw;
+  visibility: hidden;
+}
+
+.musicplayer-icons {
+  width: 10vw;
+  display: grid;
+  grid-auto-flow: column;
+  column-gap: 2em;
+  align-items: center;
+}
+
+.previous,
+.next {
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+  margin: 0 8px;
+}
+
+.play {
+  background-color: transparent;
+  border: 2px solid black;
+  padding: 5px 8px 5px 8px;
+  border-radius: 50%;
+  cursor: pointer;
+  text-align: center;
+  align-items: center;
+  margin: 0 8px;
+}
+
+.details {
+  width: 10vw;
+  display: grid;
+  grid-auto-flow: column;
+  align-items: center;
+}
+
+.details p,
+.details b {
+  margin: 0;
+  white-space: nowrap; /* Prevent text from wrapping to the next line */
+  overflow: hidden; /* Hide any overflowing content */
+  text-overflow: ellipsis;
+}
+
+.controller {
+  display: flex;
+  align-items: center;
+}
+
+.progressbar {
+  width: 40vw;
+  margin: 0 10px;
+}
