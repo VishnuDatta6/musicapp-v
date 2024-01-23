@@ -9,13 +9,16 @@ import { MdOutlineSettings } from "react-icons/md";
 import { MdNotificationsNone } from "react-icons/md";
 import BImage from './assets/philipp.jpg';
 import { useDispatch, useSelector } from "react-redux";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { fetchSongsRequest } from "./redux/actions/songActions";
 
 function App() {
   const dispatch = useDispatch();
-  const {songs, error, loading} = useSelector((state)=> state.song);
-  const currentSong = useSelector((state) => state.song.currentSong);
+  const [isPlaying, setIsPlaying] = useState(false);
+  const { songs, error, loading } = useSelector((state) => state.song);
+  const {playlist, song} = useSelector((state) => state.song.current);
+  const currentPlaylist = songs.songs && playlist.length ? songs?.songs.filter((song) => playlist.includes(song.id)) : [{ id: 1, title: "title", artist: "artist", url: "", cover: "" }];
+  const currentSong = currentPlaylist[song];
 
   useEffect(()=>{
     dispatch(fetchSongsRequest());
@@ -41,11 +44,11 @@ function App() {
         </div>
         <TopMusic />
         <div id="section-2">
-          <Popular />
+          <Popular isPlaying={isPlaying} setIsPlaying={setIsPlaying} />
           <RAlbum />
         </div>
       </div>
-      <MusicPlayer />
+      <MusicPlayer isPlaying={isPlaying} setIsPlaying={setIsPlaying}/>
       <div className="background" style={{backgroundImage : `url(${currentSong.cover ? currentSong.cover : BImage})`}}></div>
     </div>
   );

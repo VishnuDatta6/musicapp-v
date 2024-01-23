@@ -5,10 +5,12 @@
 .songs-list {
     height: 20vh;
     overflow-y: scroll;
+    scroll-behavior: smooth;
     scrollbar-width: thin;
     scrollbar-color: transparent transparent;
     -ms-overflow-style: none;
-    padding-right: 5rem;
+    padding-right: 0 2rem;
+    position: relative;
 }
 
 .songs-list::-webkit-scrollbar {
@@ -22,7 +24,23 @@
 .song {
     display: flex;
     justify-content: space-between;
-    margin: 20px 0;
+    margin: 10px 10px;
+    padding: 10px;
+    transition: transform 0.4s ease;
+}
+
+.active {
+    background-color: white;
+    border-radius: 35px;
+    box-shadow: 0 0 5px 4px #7afcac5c;
+}
+
+.song:hover {
+    background-color: white;
+    border-radius: 35px;
+    box-shadow: 0 0 5px 4px #7a90fc5c;
+    cursor: pointer;
+    transform: scale(102%);
 }
 
 .song-details {
@@ -49,6 +67,7 @@
    grid-auto-flow: column;
    align-items:center;
    column-gap: 2em;
+   padding-right: 10px;
 }
 
 .playpause {

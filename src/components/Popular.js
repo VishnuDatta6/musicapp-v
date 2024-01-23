@@ -6,28 +6,34 @@ import { FaRegHeart } from "react-icons/fa6";
 import { useDispatch, useSelector } from "react-redux";
 import { setCurrentSong } from "../redux/actions/songActions";
 
-const Popular = () => {
+const Popular = ({isPlaying, setIsPlaying}) => {
   const dispatch = useDispatch();
   const { songs, error } = useSelector((state) => state.song);
-  const [isPlaying, setIsPlaying] = useState(false);
+  const {playlist, song} = useSelector((state) => state.song.current);
   const popularSongs = songs.popular;
   const sample = songs.songs
     ? songs?.songs.filter((song) => popularSongs.includes(song.id))
     : [{ id: 1, title: "title", artist: "artist", url: "", cover: "" }];
 
-  const handlePlay = (obj)=>{
+  const sameList = playlist.length ? popularSongs.join('') === playlist.join('') : false;
+
+  const handlePlay = (obj, i)=>{
+    if(sameList && song===i){
+      setIsPlaying(!isPlaying);
+    }else{
       dispatch(setCurrentSong(obj));
+    }
   }
     return (
     <section id="popular">
       <h2>Popular</h2>
       <div className="songs-list">
-        {sample.map((item) => {
+        {sample.map((item, i) => {
           return (
-            <div className="song" key={item.id}>
+            <div className={sameList && song===i ? "song active"  :"song"} key={item.id} onClick={()=>handlePlay({song: i, playlist: songs.popular}, i)}>
               <div className="song-details">
-                <button className="playpause" onClick={()=>handlePlay(item)}>
-                {isPlaying ?  <IoPauseOutline size={20} /> : <IoPlayOutline size={20} />}
+                <button className="playpause">
+                {sameList && song===i && isPlaying ?  <IoPauseOutline size={20} /> : <IoPlayOutline size={20} />}
                 </button>
                 <img src={item.cover} alt={item.title} />
                 <div>

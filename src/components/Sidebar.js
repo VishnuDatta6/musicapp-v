@@ -41,7 +41,7 @@ const Sidebar = () => {
         <h2>Browse</h2>
         <ul>
           {browse.map((item, index) => (
-            <li key={index}>{item.icon}	&nbsp; {item.nav} </li>
+            <li key={index} className={!index ? 'activenav' : ''}>{item.icon}	&nbsp; {item.nav} </li>
           ))}
         </ul>
       </div>

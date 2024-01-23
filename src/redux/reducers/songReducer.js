@@ -4,12 +4,9 @@ const initialState = {
     songs: {},
     loading: false,
     error: null,
-    currentSong : {
-    id : 0,
-    title : '',
-    artist : '',
-    url: '',
-    cover: ''
+    current : {
+     song : 0,
+     playlist : [],
     }
 }
 
@@ -22,7 +19,7 @@ const songReducer = (state = initialState, action)=>{
         case actionTypes.FETCH_SONGS_FAILURE:
             return {...state, loading: false, songs : action.payload.error};
         case actionTypes.SET_CURRENT_SONG:
-            return {...state, currentSong : action.payload};
+            return {...state, current : {song: action.payload.song, playlist: action.payload.playlist} };
         default:
             return state;
     }

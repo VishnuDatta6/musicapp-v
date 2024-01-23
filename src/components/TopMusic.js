@@ -18,7 +18,7 @@ const TopMusic = () => {
   const [currentSlide, setCurrentSlide] = useState(0);
 
   const nextSlide = () => {
-    if (currentSlide < sample.length - 6) {
+    if (currentSlide < sample.length - 5) {
       setCurrentSlide(currentSlide + 1);
     }
   };
@@ -50,7 +50,7 @@ const TopMusic = () => {
           .slice(currentSlide, currentSlide + itemsPerSection)
           .map((item) => {
             return (
-              <figure key={item.id} onClick={() => dispatch(setCurrentSong(item))}>
+              <figure key={item.id} onClick={() => dispatch(setCurrentSong({song: sample.map(ele => ele.id).indexOf(item.id), playlist: songs.top}))}>
                 <img
                   src={item.cover}
                   alt="Cover Art"

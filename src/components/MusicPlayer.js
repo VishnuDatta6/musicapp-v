@@ -6,18 +6,21 @@ import { MdQueueMusic } from "react-icons/md";
 import { PiRepeatBold } from "react-icons/pi";
 import { TbPlayerTrackPrev, TbPlayerTrackNext } from "react-icons/tb";
 import { IoPlayOutline, IoPauseOutline } from "react-icons/io5";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { setCurrentSong } from "../redux/actions/songActions";
 
-const MusicPlayer = () => {
+const MusicPlayer = ({isPlaying, setIsPlaying}) => {
   const audioRef = useRef();
   const progressRef = useRef();
   const animationRef = useRef();
-
-  const [isPlaying, setIsPlaying] = useState(false);
+  const dispatch = useDispatch();
+  
   const [duration, setDuration] = useState(0);
   const [currentTime, setCurrentTime] = useState(0);
-
-  const currentSong = useSelector((state) => state.song.currentSong);
+  const { songs, error } = useSelector((state) => state.song);
+  const {playlist, song} = useSelector((state) => state.song.current);
+  const currentPlaylist = songs.songs && playlist.length ? songs?.songs.filter((song) => playlist.includes(song.id)) : [{ id: 1, title: "title", artist: "artist", url: "", cover: "" }];
+  const currentSong = currentPlaylist[song];
 
   function whilePlaying() {
     if(currentSong.url){
@@ -29,7 +32,7 @@ const MusicPlayer = () => {
   useEffect(() => {
     if(currentSong.url){
     audioRef.current.src = currentSong.url;
-    setIsPlaying((prev) => !prev);
+    setIsPlaying(true);
 
     audioRef.current.addEventListener("loadedmetadata", () => {
       const seconds = Math.floor(audioRef.current.duration);
@@ -51,21 +54,22 @@ const MusicPlayer = () => {
     };
   }, [currentSong]);
 
-  const playPauseToggle = () => {
-    if (currentSong.url === "") {
-      alert("Please select a song");
-      return;
-    }
-    const prevValue = isPlaying;
-    setIsPlaying(!prevValue);
-
-    if (!prevValue) {
+  useEffect(()=>{
+    if (isPlaying) {
       audioRef.current.play();
       animationRef.current = requestAnimationFrame(whilePlaying);
     } else {
       audioRef.current.pause();
       cancelAnimationFrame(animationRef.current);
     }
+  }, [isPlaying])
+
+  const playPauseToggle = () => {
+    if (currentSong.url === "") {
+      alert("Please select a song");
+      return;
+    }
+    setIsPlaying(!isPlaying);
   };
 
   const calculateTime = (sec) => {
@@ -90,24 +94,28 @@ const MusicPlayer = () => {
   };
 
   const handlePrevious = () => {
-    return;
+    if(song){
+      dispatch(setCurrentSong({song: song-1, playlist : playlist}));
+    }
   };
 
   const handleNext = () => {
-    return;
+    if(song<playlist.length-1){
+      dispatch(setCurrentSong({song: song+1, playlist : playlist}));
+    }
   };
 
   return (
     <section id="musicplayer">
       <div className="details">
-        <img src={currentSong.cover} alt="Cover Art" />
+        <img src={currentSong.cover ? currentSong.cover : Sample} alt="Cover Art" />
         <div>
           <b>{currentSong.title}</b>
           <p>{currentSong.artist}</p>
         </div>
       </div>
       <div className="audio-controls">
-        <button className="previous" onClick={handlePrevious}>
+        <button className="previous" onClick={handlePrevious} disabled={!song}>
           {<TbPlayerTrackPrev size={20} />}
         </button>
         <button className="play" onClick={playPauseToggle}>
@@ -117,7 +125,7 @@ const MusicPlayer = () => {
             <IoPlayOutline size={25} />
           )}
         </button>
-        <button className="next" onClick={handleNext}>
+        <button className="next" onClick={handleNext}  disabled={song === playlist.length-1}>
           {<TbPlayerTrackNext size={20} />}
         </button>
       </div>
