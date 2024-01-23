@@ -19,32 +19,29 @@ const MusicPlayer = () => {
 
   const currentSong = useSelector((state) => state.song.currentSong);
 
-  const whilePlaying = () => {
-    if (audioRef.current.currentTime) {
-      progressRef.current.value = audioRef.current.currentTime;
-      changeCurrentTime();
-      animationRef.current = requestAnimationFrame(whilePlaying);
-    }
-  };
+  function whilePlaying() {
+    if(currentSong.url){
+    progressRef.current.value = audioRef.current.currentTime;
+    changeCurrentTime();
+    animationRef.current = requestAnimationFrame(whilePlaying);
+  }}
 
   useEffect(() => {
+    if(currentSong.url){
     audioRef.current.src = currentSong.url;
-    setIsPlaying(prev => !prev);
+    setIsPlaying((prev) => !prev);
 
     audioRef.current.addEventListener("loadedmetadata", () => {
       const seconds = Math.floor(audioRef.current.duration);
       setDuration(seconds);
       progressRef.current.max = seconds;
     });
-
-    setCurrentTime(0);
-    progressRef.current.value = 0;
+    
     // progressRef.current.style.setProperty("--player-width", "0%");
-    if (isPlaying) {
-      audioRef.current.play();
-      animationRef.current = requestAnimationFrame(whilePlaying);
+    
+    audioRef.current.play();
+    animationRef.current = requestAnimationFrame(whilePlaying);
     }
-
     return () => {
       if (audioRef.current) {
         audioRef.current.pause();
@@ -55,18 +52,21 @@ const MusicPlayer = () => {
   }, [currentSong]);
 
   const playPauseToggle = () => {
+    if (currentSong.url === "") {
+      alert("Please select a song");
+      return;
+    }
     const prevValue = isPlaying;
     setIsPlaying(!prevValue);
 
     if (!prevValue) {
       audioRef.current.play();
-      audioRef.current = requestAnimationFrame(whilePlaying);
+      animationRef.current = requestAnimationFrame(whilePlaying);
     } else {
       audioRef.current.pause();
       cancelAnimationFrame(animationRef.current);
     }
   };
-
 
   const calculateTime = (sec) => {
     const minutes = Math.floor(sec / 60);
