@@ -9,41 +9,45 @@ import { IoPlayOutline, IoPauseOutline } from "react-icons/io5";
 import { useDispatch, useSelector } from "react-redux";
 import { setCurrentSong } from "../redux/actions/songActions";
 
-const MusicPlayer = ({isPlaying, setIsPlaying}) => {
+const MusicPlayer = ({ isPlaying, setIsPlaying }) => {
   const audioRef = useRef();
   const progressRef = useRef();
   const animationRef = useRef();
   const dispatch = useDispatch();
-  
+
   const [duration, setDuration] = useState(0);
   const [currentTime, setCurrentTime] = useState(0);
-  const { songs, error } = useSelector((state) => state.song);
-  const {playlist, song} = useSelector((state) => state.song.current);
-  const currentPlaylist = songs.songs && playlist.length ? songs?.songs.filter((song) => playlist.includes(song.id)) : [{ id: 1, title: "title", artist: "artist", url: "", cover: "" }];
+  const { songs } = useSelector((state) => state.song);
+  const { playlist, song } = useSelector((state) => state.song.current);
+  const currentPlaylist =
+    songs.songs && playlist.length
+      ? songs?.songs.filter((song) => playlist.includes(song.id))
+      : [{ id: 1, title: "title", artist: "artist", url: "", cover: "" }];
   const currentSong = currentPlaylist[song];
 
   function whilePlaying() {
-    if(currentSong.url){
-    progressRef.current.value = audioRef.current.currentTime;
-    changeCurrentTime();
-    animationRef.current = requestAnimationFrame(whilePlaying);
-  }}
+    if (currentSong.url) {
+      progressRef.current.value = audioRef.current.currentTime;
+      changeCurrentTime();
+      animationRef.current = requestAnimationFrame(whilePlaying);
+    }
+  }
 
   useEffect(() => {
-    if(currentSong.url){
-    audioRef.current.src = currentSong.url;
-    setIsPlaying(true);
+    if (currentSong.url) {
+      audioRef.current.src = currentSong.url;
+      setIsPlaying(true);
 
-    audioRef.current.addEventListener("loadedmetadata", () => {
-      const seconds = Math.floor(audioRef.current.duration);
-      setDuration(seconds);
-      progressRef.current.max = seconds;
-    });
-    
-    // progressRef.current.style.setProperty("--player-width", "0%");
-    
-    audioRef.current.play();
-    animationRef.current = requestAnimationFrame(whilePlaying);
+      audioRef.current.addEventListener("loadedmetadata", () => {
+        const seconds = Math.floor(audioRef.current.duration);
+        setDuration(seconds);
+        progressRef.current.max = seconds;
+      });
+
+      // progressRef.current.style.setProperty("--player-width", "0%");
+
+      audioRef.current.play();
+      animationRef.current = requestAnimationFrame(whilePlaying);
     }
     return () => {
       if (audioRef.current) {
@@ -54,7 +58,7 @@ const MusicPlayer = ({isPlaying, setIsPlaying}) => {
     };
   }, [currentSong]);
 
-  useEffect(()=>{
+  useEffect(() => {
     if (isPlaying) {
       audioRef.current.play();
       animationRef.current = requestAnimationFrame(whilePlaying);
@@ -62,7 +66,7 @@ const MusicPlayer = ({isPlaying, setIsPlaying}) => {
       audioRef.current.pause();
       cancelAnimationFrame(animationRef.current);
     }
-  }, [isPlaying])
+  }, [isPlaying]);
 
   const playPauseToggle = () => {
     if (currentSong.url === "") {
@@ -94,21 +98,24 @@ const MusicPlayer = ({isPlaying, setIsPlaying}) => {
   };
 
   const handlePrevious = () => {
-    if(song){
-      dispatch(setCurrentSong({song: song-1, playlist : playlist}));
+    if (song) {
+      dispatch(setCurrentSong({ song: song - 1, playlist: playlist }));
     }
   };
 
   const handleNext = () => {
-    if(song<playlist.length-1){
-      dispatch(setCurrentSong({song: song+1, playlist : playlist}));
+    if (song < playlist.length - 1) {
+      dispatch(setCurrentSong({ song: song + 1, playlist: playlist }));
     }
   };
 
   return (
     <section id="musicplayer">
       <div className="details">
-        <img src={currentSong.cover ? currentSong.cover : Sample} alt="Cover Art" />
+        <img
+          src={currentSong.cover ? currentSong.cover : Sample}
+          alt="Cover Art"
+        />
         <div>
           <b>{currentSong.title}</b>
           <p>{currentSong.artist}</p>
@@ -125,7 +132,11 @@ const MusicPlayer = ({isPlaying, setIsPlaying}) => {
             <IoPlayOutline size={25} />
           )}
         </button>
-        <button className="next" onClick={handleNext}  disabled={song === playlist.length-1}>
+        <button
+          className="next"
+          onClick={handleNext}
+          disabled={song === playlist.length - 1}
+        >
           {<TbPlayerTrackNext size={20} />}
         </button>
       </div>

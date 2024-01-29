@@ -1,5 +1,4 @@
-import React, { useState } from "react";
-import Sample from "../assets/white-blank-3d.jpg";
+import React from "react";
 import { IoPlayOutline, IoPauseOutline } from "react-icons/io5";
 import "../css/popular.css";
 import { FaRegHeart } from "react-icons/fa6";
@@ -8,7 +7,7 @@ import { setCurrentSong } from "../redux/actions/songActions";
 
 const Popular = ({isPlaying, setIsPlaying}) => {
   const dispatch = useDispatch();
-  const { songs, error } = useSelector((state) => state.song);
+  const { songs } = useSelector((state) => state.song);
   const {playlist, song} = useSelector((state) => state.song.current);
   const popularSongs = songs.popular;
   const sample = songs.songs

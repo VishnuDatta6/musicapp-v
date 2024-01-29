@@ -19,7 +19,6 @@ function App() {
   const {playlist, song} = useSelector((state) => state.song.current);
   const currentPlaylist = songs.songs && playlist.length ? songs?.songs.filter((song) => playlist.includes(song.id)) : [{ id: 1, title: "title", artist: "artist", url: "", cover: "" }];
   const currentSong = currentPlaylist[song];
-
   useEffect(()=>{
     dispatch(fetchSongsRequest());
   }, [dispatch])

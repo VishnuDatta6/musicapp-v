@@ -1,8 +1,8 @@
 import * as actionTypes from '../actions/actionTypes';
-import {put,take,takeLatest, call} from 'redux-saga/effects';
+import {put,takeLatest, call} from 'redux-saga/effects';
 import { fetchSongsFailure, fetchSongsSuccess } from '../actions/songActions';
-import firebase, {database} from '../../firebase';
-import { getDatabase, ref, onValue } from 'firebase/database';
+import {database} from '../../firebase';
+import { ref, onValue } from 'firebase/database';
 
 const onValuePromise = (ref) => new Promise((resolve, reject) => {
     onValue(ref, (snapshot) => resolve(snapshot));

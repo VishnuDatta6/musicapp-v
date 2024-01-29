@@ -1,13 +1,12 @@
 import React, { useState } from "react";
 import { FaArrowLeftLong } from "react-icons/fa6";
 import { FaArrowRightLong } from "react-icons/fa6";
-import Sample from "../assets/white-blank-3d.jpg";
 import "../css/topmusic.css";
 import { useDispatch, useSelector } from "react-redux";
 import { setCurrentSong } from "../redux/actions/songActions";
 
 const TopMusic = () => {
-  const { songs, error } = useSelector((state) => state.song);
+  const { songs } = useSelector((state) => state.song);
   const topSongs = songs.top;
   const sample = songs.songs
     ? songs?.songs.filter((song) => topSongs.includes(song.id))

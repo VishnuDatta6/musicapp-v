@@ -1,5 +1,5 @@
 import React from "react";
-import '../css/sidebar.css';
+import "../css/sidebar.css";
 import { FiHome } from "react-icons/fi";
 import { MdPlaylistPlay } from "react-icons/md";
 import { FiUser } from "react-icons/fi";
@@ -9,21 +9,20 @@ import { MdOutlineEventAvailable } from "react-icons/md";
 import { HiOutlineMicrophone } from "react-icons/hi2";
 import { FaRegHeart } from "react-icons/fa";
 
-
 const Sidebar = () => {
   const userDetails = {
-    image : require('../assets/v-image.png'),
-    name : 'Vishnu Datta',
-    email : 'vishnudatta06@gmail.com'
-  }
+    image: require("../assets/v-image.png"),
+    name: "Vishnu Datta",
+    email: "vishnudatta06@gmail.com",
+  };
   const browse = [
-    { icon: <FiHome size={16}/>, nav: "Home" },
-    { icon: <MdPlaylistPlay size={16}/>, nav: "Playlist" },
-    { icon: <FiUser size={16}/>, nav: "Artist" },
-    { icon: <IoIosAlbums size={16}/>, nav: "Albums" },
+    { icon: <FiHome size={16} />, nav: "Home" },
+    { icon: <MdPlaylistPlay size={16} />, nav: "Playlist" },
+    { icon: <FiUser size={16} />, nav: "Artist" },
+    { icon: <IoIosAlbums size={16} />, nav: "Albums" },
   ];
   const discover = [
-    { icon: <LuRadio size={16}/>, nav: "Radio" },
+    { icon: <LuRadio size={16} />, nav: "Radio" },
     { icon: <MdOutlineEventAvailable size={16} />, nav: "Event" },
     { icon: <HiOutlineMicrophone size={16} />, nav: "Podcast" },
     { icon: <FaRegHeart size={16} />, nav: "For You" },
@@ -31,7 +30,7 @@ const Sidebar = () => {
   return (
     <section className="sidebar">
       <figure>
-        <img src={userDetails.image}/>
+        <img src={userDetails.image} alt="user icon" />
         <figcaption>
           <b>{userDetails.name}</b>
           <p>{userDetails.email}</p>
@@ -41,7 +40,9 @@ const Sidebar = () => {
         <h2>Browse</h2>
         <ul>
           {browse.map((item, index) => (
-            <li key={index} className={!index ? 'activenav' : ''}>{item.icon}	&nbsp; {item.nav} </li>
+            <li key={index} className={!index ? "activenav" : ""}>
+              {item.icon} &nbsp; {item.nav}{" "}
+            </li>
           ))}
         </ul>
       </div>
@@ -49,7 +50,9 @@ const Sidebar = () => {
         <h2>Discover</h2>
         <ul>
           {discover.map((item, index) => (
-            <li key={index}>{item.icon}	&nbsp; {item.nav}</li>
+            <li key={index}>
+              {item.icon} &nbsp; {item.nav}
+            </li>
           ))}
         </ul>
       </div>
